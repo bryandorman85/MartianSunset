@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Pure CSS and Javascript Sunrise and Sunset with Mouse Hover</title>
+    <link rel="stylesheet" href="MartianSunset.css">
+  </head>
+  <body style="width: 100%; height: 100%; margin: 0; padding: 0" onmouseup="stopMove();" onresize="windowResize();">
+    <div id="starsContainer" onmousedown="startMove();" onmouseup="stopMove();">
+      <div id="stars" onmousedown="startMove();" onmouseup="stopMove();">
+      </div>
+    </div>
+
+  	<div id="sun" onmousedown="startMove();" onmouseup="stopMove();">
+
+  	</div>
+
+    <div id="sunDay" onmousedown="startMove();" onmouseup="stopMove();">
+
+    </div>
+
+    <div id="sunSet" onmousedown="startMove();" onmouseup="stopMove();">
+
+    </div>
+
+    <div id="sky" onmousedown="startMove();" onmouseup="stopMove();">
+
+    </div>
+
+    <div class="star" style="left: 250px; top: 30px;"></div>
+    <div class="star" style="left: 300px; top: 25px;"></div>
+    <div class="star" style="right: 40px; top: 40px;"></div>
+    <div class="star" style="right: 80px; top: 45px;"></div>
+    <div class="star" style="right: 120px; top: 20px;"></div>
+
+    <div id="horizon" onmousedown="startMove();" onmouseup="stopMove();"></div>
+
+    <div id="horizonNight" onmousedown="startMove();" onmouseup="stopMove();"></div>
+
+    <div id="phobos" onmousedown="startMove();" onmouseup="stopMove();"></div>
+
+    <div id="deimos" onmousedown="startMove();" onmouseup="stopMove();"></div>
+
+    <div id="mountainRange">
+      <div id="mountain" onmousedown="startMove();" onmouseup="stopMove();">
+    </div>
+
+    </div>
+
+    <div id="division" onmousedown="startDraggingDivision();" onmouseup="stopMove();">
+
+    </div>
+
+    <div id="water" onmousedown="startMove();" onmouseup="stopMove();"></div>
+
+    <div id="waterReflectionContainer" onmousedown="startMove();" onmouseup="stopMove();">
+      <div id="waterReflectionMiddle" onmousedown="startMove();" onmouseup="stopMove();">
+
+      </div>
+    </div>
+    <div id="waterDistance"  onmousedown="startMove();" onmouseup="stopMove();"></div>
+    <div id="darknessOverlaySky"  onmousedown="startMove();" onmouseup="stopMove();"></div>
+    <div id="darknessOverlay"></div>
+    <div id="oceanRippleContainer">
+   </div>
+    <div id="oceanRipple"></div>
+<script type="text/javascript">
+var mouse = {x: 0, y: 0};
+var myWidth = 0, myHeight = 0;
+var mouseIsDown = false;
+var mouseIsDownDivision = false;
+
+document.addEventListener('mousemove', function(e){
+  mouse.x = e.clientX || e.pageX;
+  mouse.y = e.clientY || e.pageY
+    updateDimensions();
+
+  //if(mouseIsDown) {
+     document.getElementById("sun").style.background = '-webkit-radial-gradient(' + mouse.x + 'px ' + mouse.y + 'px, circle, rgba(247,248,242,1) 0%,rgba(28,249,249,1) 2.4%,rgba(46,214,247,1) 6.8%, rgba(95,200,248,1) 10%,rgba(132,165,201,1) 24%,rgba(133,130,115,1) 42%,rgba(122,97,46,1) 70%,rgba(106,75,24,1) 100%)';
+    document.getElementById("sun").style.background = '-moz-radial-gradient(' + mouse.x + 'px ' + mouse.y + 'px, circle, rgba(247,248,242,1) 0%,rgba(28,249,249,1) 2.4%,rgba(46,214,247,1) 6.8%, rgba(95,200,248,1) 10%,rgba(132,165,201,1) 24%,rgba(133,130,115,1) 42%,rgba(122,97,46,1) 70%,rgba(106,75,24,1) 100%)';
+    document.getElementById("sun").style.background = '-ms-radial-gradient(' + mouse.x + 'px ' + mouse.y + 'px, circle, rgba(247,248,242,1) 0%,rgba(28,249,249,1) 2.4%,rgba(46,214,247,1) 6.8%, rgba(95,200,248,1) 10%,rgba(132,165,201,1) 24%,rgba(133,130,115,1) 42%,rgba(122,97,46,1) 70%,rgba(106,75,24,1) 100%)';
+
+    document.getElementById("sunDay").style.background = '-webkit-radial-gradient(' + mouse.x + 'px ' + mouse.y + 'px, circle, rgba(251,255,252,0.9) 0%,rgba(219,250,253,0.4) 30%,rgba(197,219,226,0.01) 70%, rgba(197,219,226,0.0) 70%,rgba(132,165,201,0) 100%)';
+    document.getElementById("sunDay").style.background = '-moz-radial-gradient(' + mouse.x + 'px ' + mouse.y + 'px, circle, rgba(251,255,252,0.9) 0%,rgba(219,250,253,0.4) 30%,rgba(197,219,226,0.01) 70%, rgba(197,219,226,0.0) 70%,rgba(132,165,201,0) 100%)';
+    document.getElementById("sunDay").style.background = '-ms-radial-gradient(' + mouse.x + 'px ' + mouse.y + 'px, circle, rgba(251,255,252,0.9) 0%,rgba(219,250,253,0.4) 30%,rgba(197,219,226,0.01) 70%, rgba(197,219,226,0.0) 70%,rgba(132,165,201,0) 100%)';
+
+    document.getElementById("sunSet").style.background = '-webkit-radial-gradient(' + mouse.x + 'px ' + mouse.y + 'px, circle, rgba(255,255,254,0.8) 2%,rgba(0,255,236,0.9) 3%,rgba(41,50,253,0.7) 5%, rgba(0,0,243,0.5) 8%,rgba(0,0,93,0.3) 100%)';
+    document.getElementById("sunSet").style.background = '-moz-radial-gradient(' + mouse.x + 'px ' + mouse.y + 'px, circle, rgba(255,255,254,0.8) 2%,rgba(0,255,236,0.9) 3%,rgba(41,50,253,0.7) 5%, rgba(0,0,243,0.5) 8%,rgba(0,0,93,0.3) 100%)';
+    document.getElementById("sunSet").style.background = '-ms-radial-gradient(' + mouse.x + 'px ' + mouse.y + 'px, circle, rgba(255,255,254,0.8) 2%,rgba(0,255,236,0.9) 3%,rgba(41,50,253,0.7) 5%, rgba(0,0,243,0.5) 8%,rgba(0,0,93,0.3) 100%)';
+
+    document.getElementById("waterReflectionContainer").style.perspectiveOrigin = (mouse.x/myWidth*100).toString() + "% -15%";
+    document.getElementById("waterReflectionMiddle").style.left = (mouse.x-myWidth-(myWidth*.03)).toString() + "px";
+
+    var bodyWidth = document.getElementsByTagName("body")[0].clientWidth;
+
+    document.getElementById("sun").style.width = (bodyWidth);
+    document.getElementById("sun").style.left = "0px";
+    document.getElementById("sunDay").style.width = (bodyWidth);
+    document.getElementById("sunDay").style.left = "0px";
+
+    var sky = document.getElementById("sun");
+    var water = document.getElementById("water");
+    var waterHeight = water.clientHeight;
+    var skyHeight = sky.clientHeight;
+    var skyRatio = mouse.y / skyHeight;
+    var waterRatio = waterHeight / myHeight;
+    document.getElementById("darknessOverlay").style.opacity = Math.min((mouse.y-(myHeight/2)) / (myHeight/2), 1);
+    document.getElementById("darknessOverlaySky").style.opacity = Math.min((mouse.y-(myHeight*7/10)) / (myHeight-(myHeight*7/10)), 1);
+    document.getElementById("phobos").style.opacity = Math.min((mouse.y-(myHeight*7/10)) / (myHeight-(myHeight*7/10)), 0.65);
+    document.getElementById("deimos").style.opacity = Math.min((mouse.y-(myHeight*8/10)) / (myHeight-(myHeight*8/10)), 0.65);
+    document.getElementById("horizonNight").style.opacity = (mouse.y-(myHeight*4/5)) / (myHeight-(myHeight*4/5));
+
+    document.getElementById("starsContainer").style.opacity = (mouse.y/myHeight-0.6);
+
+    document.getElementById("waterDistance").style.opacity = (mouse.y/myHeight+0.6);
+    document.getElementById("sunDay").style.opacity = (1-mouse.y/myHeight);
+    document.getElementById("sky").style.opacity = Math.min((1-mouse.y/myHeight), 0.99);
+
+    document.getElementById("sunSet").style.opacity = (mouse.y/myHeight-0.2);
+
+
+
+    if(mouse.y > 0) {
+      var clouds = document.getElementsByClassName("cloud");
+      for(var i=0; i<clouds.length; i++) {
+        clouds[i].style.left = Math.min(myWidth*(Math.pow(mouse.y,2)/Math.pow(myHeight/2,2)) * -1, 0);
+      }
+    //}
+
+    var stars = document.getElementsByClassName('star');
+    for(var i=0; i<stars.length; i++) {
+      stars[i].style.opacity = (mouse.y/myHeight-0.6);
+    }
+
+
+    if(mouse.y > myHeight/2) {
+      document.getElementById("sun").style.opacity = Math.min((myHeight-mouse.y) / (myHeight/2) + 0.2, 0.5);
+      document.getElementById("horizon").style.opacity = (myHeight-mouse.y) / (myHeight/2) + 0.2;
+
+      document.getElementById("waterReflectionMiddle").style.opacity = (myHeight-mouse.y) / (myHeight/2) - 0.1;
+    } else {
+      document.getElementById("horizon").style.opacity = Math.min(mouse.y / (myHeight/2), 0.99);
+
+      document.getElementById("sun").style.opacity = Math.min(mouse.y / (myHeight/2), 0.5);
+      document.getElementById("waterReflectionMiddle").style.opacity = mouse.y / (myHeight/2) - 0.1;
+    }
+
+  } else if (mouseIsDownDivision) {
+    var sunElement = document.getElementById("sun");
+    var water = document.getElementById("water");
+    var division = document.getElementById("division");
+    sunElement.style.height = (mouse.y).toString() + "px";
+    document.getElementById("sunDay").style.height = (mouse.y).toString() + "px";
+    division.style.top = (mouse.y).toString() + "px";
+    var waterHeight = myHeight-mouse.y;
+    water.style.height = waterHeight.toString() + "px";
+
+    document.getElementById("sun").style.height = (mouse.y).toString() + "px";
+    document.getElementById("sunDay").style.height = (mouse.y).toString() + "px";
+    document.getElementById("horizon").style.height = (mouse.y).toString() + "px";
+    document.getElementById("waterDistance").style.height = (myHeight-mouse.y).toString() + "px";
+    document.getElementById("oceanRippleContainer").style.height = (myHeight-mouse.y).toString() + "px";
+    document.getElementById("darknessOverlay").style.height = (myHeight-mouse.y).toString() + "px";
+  }
+
+
+}, false);
+
+function updateDimensions() {
+if( typeof( window.innerWidth ) == 'number' ) {
+  //Non-IE
+  myWidth = window.innerWidth;
+  myHeight = window.innerHeight;
+} else if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {
+
+  myWidth = document.documentElement.clientWidth;
+  myHeight = document.documentElement.clientHeight;
+} else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
+
+  myWidth = document.body.clientWidth;
+  myHeight = document.body.clientHeight;
+}
+
+}
+
+function startMove() {
+mouseIsDown = true;
+}
+
+function stopMove() {
+mouseIsDown = false;
+mouseIsDownDivision = false;
+      var sky = document.getElementById("sun");
+}
+
+function startDraggingDivision() {
+
+mouseIsDownDivision = true;
+}
+
+function windowResize() {
+updateDimensions();
+var skyHeight = document.getElementById("horizon").clientHeight;
+
+
+
+
+// update to new sky height
+skyHeight = document.getElementById("sun").clientHeight;
+document.getElementById("waterDistance").style.height = myHeight - skyHeight;
+ document.getElementById("division").style.top = skyHeight;
+}
+    </script>
+  </body>
+</html>
